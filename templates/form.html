@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Formulario</title>
+	</head>
+	<body>
+		<form action="/" method="post">
+			<p> Introduce la siquente frase: {{vs.phrase}} </p>
+			<p><input type="text" name="usr_phrase"></p>
+			<p><input type="hidden" name="phrase" value="{{vs.phrase}}"></p>
+			<p><input type="hidden" name="timestamp" value="{{vs.timestamp}}"></p>
+		</form>
+	</body>
+</html>
