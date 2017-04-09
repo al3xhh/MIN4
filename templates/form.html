@@ -4,11 +4,20 @@
 		<title>Formulario</title>
 	</head>
 	<body>
-		<form action="/" method="post">
+		<form action="/" method="post" id="form">
+			Selecciona tu nombre:
+			<select name="name" form="form">
+				<option value="Christian">Christian</option>
+				<option value="Alejandro">Alejandro</option>
+			</select>
 			<p> Introduce la siquente frase: {{vs.phrase}} </p>
 			<p><input type="text" name="usr_phrase"></p>
+			{% if vs.error > 0%}
+				<p>Debes introducir el mismo numero de palabras (las palabaras estan delimitadas por un espacio)</p>
+			{%endif%}
 			<p><input type="hidden" name="phrase" value="{{vs.phrase}}"></p>
 			<p><input type="hidden" name="timestamp" value="{{vs.timestamp}}"></p>
+
 		</form>
 	</body>
 </html>

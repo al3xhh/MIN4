@@ -22,11 +22,22 @@ def form():
 		op = OPData()
 		op["original_phrase"] = request.form["phrase"]
 		op["user_phrase"] = request.form["usr_phrase"]
+
+		if len(op["original_phrase"].split()) != len(op["user_phrase"].split()):
+			values = {}
+			values["error"] = 1
+			values["timestamp"] = float(request.form["timestamp"])
+			values["phrase"] = op["original_phrase"]
+
+			return render_template("form.html", vs=values)
+
+		op["name"] = request.form["name"]
 		op["total_time"] = time() - float(request.form["timestamp"])
 		op["avg_time_keystroke"] = op["total_time"] / len(op["user_phrase"])
 		op["phrase_len_chars"] = len(op["original_phrase"])
 		op["phrase_len_words"] = len(op["original_phrase"].split())
 		op["failed_words"] = get_failed_words(op["original_phrase"], op["user_phrase"])
+		op["failed_chars"] = get_num_failed_chars(op["original_phrase"], op["user_phrase"])
 
 		with Mongo:
 			OPData.insert(op)
@@ -35,6 +46,7 @@ def form():
 
 	if request.method == "GET":
 		values = {}
+		values["error"] = 0
 		values["timestamp"] = time()
 
 		with Mongo:
