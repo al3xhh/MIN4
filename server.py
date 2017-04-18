@@ -32,6 +32,7 @@ def form():
 			return render_template("form.html", vs=values)
 
 		op["name"] = request.form["name"]
+		print request.form["timestamp"]
 		op["total_time"] = time() - float(request.form["timestamp"])
 		op["avg_time_keystroke"] = op["total_time"] / len(op["user_phrase"])
 		op["phrase_len_chars"] = len(op["original_phrase"])
@@ -52,7 +53,7 @@ def form():
 		with Mongo:
 			rnd_num = randint(0, OPPhrase.count() - 1)
 			values["phrase"] = OPPhrase.find()[rnd_num]["phrase"]
-			
+
 		return render_template("form.html", vs=values)
 
 @app.route("/load", methods=["GET", "POST"])

@@ -2,6 +2,13 @@
 <html>
 	<head>
 		<title>Formulario</title>
+		<script>
+			function startTimestamp() {
+				var date = new Date();
+				var timestamp = document.getElementById("timestamp");
+				timestamp.value = date.getTime() / 1000;
+			}
+		</script>
 	</head>
 	<body>
 		<form action="/" method="post" id="form">
@@ -11,12 +18,12 @@
 				<option value="Alejandro">Alejandro</option>
 			</select>
 			<p> Introduce la siquente frase: {{vs.phrase}} </p>
-			<p><input type="text" name="usr_phrase"></p>
+			<p><input type="text" name="usr_phrase" onfocus="startTimestamp()"></p>
 			{% if vs.error > 0%}
-				<p>Debes introducir el mismo numero de palabras (las palabaras estan delimitadas por un espacio)</p>
+				<p>Debes introducir el mismo número de palabras (las palabaras están delimitadas por un espacio)</p>
 			{%endif%}
 			<p><input type="hidden" name="phrase" value="{{vs.phrase}}"></p>
-			<p><input type="hidden" name="timestamp" value="{{vs.timestamp}}"></p>
+			<p><input type="hidden" name="timestamp" id="timestamp" value=""></p>
 
 		</form>
 	</body>
