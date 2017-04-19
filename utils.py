@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import difflib
 
 def get_failed_words(org_phrase, usr_phrase):
@@ -35,3 +37,36 @@ def find_word_errors(org_word, usr_word):
 			size += i.size
 
 	return max(len(org_word), len(usr_word)) - size
+
+def find_accent_marks(org_phrase):
+    words = org_phrase.strip().split()
+    accent_letters = ["á", "é", "í", "ó", "ù", "Á", "É", "Í", "Ó", "Ú"].encode('utf8')
+    accent_marks = [0] * len(words)
+    i = 0
+
+    for word in words:
+        for letter in accent_letters:
+            if letter in word:
+                accent_marks[i] = 1
+                break
+        i += 1
+
+    return accent_marks
+
+def find_question_marks(org_phrase):
+    return "?" in org_phrase
+
+def find_exclamation_marks(org_phrase):
+    return "!" in org_phrase
+
+def find_punctuation_marks(org_phrase, find):
+    words = org_phrase.strip().split()
+    punctuation = [0] * len(words)
+    i = 0
+
+    for word in words:
+        if find in word:
+            punctuation[i] = 1
+        i += 1
+
+    return punctuation

@@ -12,7 +12,6 @@ class OPData(Document):
 class OPPhrase(Document):
 	config_database = "mineria"
 	config_collection = "phrases"
-	phrase = "p"
 
 app = Flask(__name__)
 
@@ -60,7 +59,13 @@ def form():
 def loadPhrases():
 	if request.method == "POST":
 		op = OPPhrase()
-		op["phrase"] = request.form["phrase"]
+		org_phrase = request.form["phrase"]
+		op["phrase"] = org_phrase
+		#op["accent_marks"] = find_accent_marks(org_phrase)
+		op["question_marks"] = find_question_marks(org_phrase)
+		op["exclamation_marks"] = find_exclamation_marks(org_phrase)
+		op["dots"] = find_punctuation_marks(org_phrase, ".")
+		op["commas"] = find_punctuation_marks(org_phrase, ",")
 
 		with Mongo:
 			OPPhrase.insert(op)
