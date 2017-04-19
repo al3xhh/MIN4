@@ -31,13 +31,15 @@ def form():
 			return render_template("form.html", vs=values)
 
 		op["name"] = request.form["name"]
-		print request.form["timestamp"]
 		op["total_time"] = time() - float(request.form["timestamp"])
 		op["avg_time_keystroke"] = op["total_time"] / len(op["user_phrase"])
 		op["phrase_len_chars"] = len(op["original_phrase"])
 		op["phrase_len_words"] = len(op["original_phrase"].split())
 		op["failed_words"] = get_failed_words(op["original_phrase"], op["user_phrase"])
 		op["failed_chars"] = get_num_failed_chars(op["original_phrase"], op["user_phrase"])
+		op["failed_accent_marks"] = get_failed_accent_marks(request.form["accent_marks"], op["user_phrase"])
+		op["failed_dots"] = get_failed_punctuation_marks(".", request.form["dots"], op["user_phrase"])
+		op["failed_commas"] = get_failed_punctuation_marks(",", request.form["commas"], op["user_phrase"])
 
 		with Mongo:
 			OPData.insert(op)
@@ -52,6 +54,11 @@ def form():
 		with Mongo:
 			rnd_num = randint(0, OPPhrase.count() - 1)
 			values["phrase"] = OPPhrase.find()[rnd_num]["phrase"]
+			values["accent_marks"] = OPPhrase.find()[rnd_num]["accent_marks"]
+			values["question_marks"] = OPPhrase.find()[rnd_num]["question_marks"]
+			values["exclamation_marks"] = OPPhrase.find()[rnd_num]["exclamation_marks"]
+			values["dots"] = OPPhrase.find()[rnd_num]["dots"]
+			values["commas"] = OPPhrase.find()[rnd_num]["commas"]
 
 		return render_template("form.html", vs=values)
 
@@ -61,7 +68,7 @@ def loadPhrases():
 		op = OPPhrase()
 		org_phrase = request.form["phrase"]
 		op["phrase"] = org_phrase
-		#op["accent_marks"] = find_accent_marks(org_phrase)
+		op["accent_marks"] = find_accent_marks(org_phrase)
 		op["question_marks"] = find_question_marks(org_phrase)
 		op["exclamation_marks"] = find_exclamation_marks(org_phrase)
 		op["dots"] = find_punctuation_marks(org_phrase, ".")
