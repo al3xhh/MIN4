@@ -8,6 +8,20 @@
 				var timestamp = document.getElementById("timestamp");
 				timestamp.value = date.getTime() / 1000;
 			}
+
+			function myKeyPress(e){
+				var key = event.keyCode || event.charCode;
+				var shift = document.getElementById("shift");
+				var del = document.getElementById("del");
+				var times_shift = shift.value;
+				var times_del = del.value;
+
+		    if (e.shiftKey) {
+					shift.value = parseInt(times_shift) + 1;
+				} else if (key == 8 || key == 46) {
+					del.value = parseInt(times_del) + 1;
+				}
+  		}
 		</script>
 	</head>
 	<body>
@@ -18,7 +32,7 @@
 				<option value="Alejandro">Alejandro</option>
 			</select>
 			<p> Introduce la siquente frase: {{vs.phrase}} </p>
-			<p><input type="text" name="usr_phrase" onfocus="startTimestamp()"></p>
+			<p><input type="text" name="usr_phrase" onfocus="startTimestamp()" onkeydown="myKeyPress(event)"></p>
 			{% if vs.error > 0%}
 				<p>Debes introducir el mismo número de palabras (las palabaras están delimitadas por un espacio)</p>
 			{%endif%}
@@ -29,6 +43,8 @@
 			<p><input type="hidden" name="dots" value="{{vs.dots}}"></p>
 			<p><input type="hidden" name="commas" value="{{vs.commas}}"></p>
 			<p><input type="hidden" name="timestamp" id="timestamp" value=""></p>
+			<p><input type="hidden" name="shift" id="shift" value="{{vs.shift}}"></p>
+			<p><input type="hidden" name="del" id="del" value="{{vs.del}}"></p>
 		</form>
 	</body>
 </html>

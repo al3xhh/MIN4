@@ -40,6 +40,8 @@ def form():
 		op["failed_accent_marks"] = get_failed_accent_marks(request.form["accent_marks"], op["user_phrase"])
 		op["failed_dots"] = get_failed_punctuation_marks(".", request.form["dots"], op["user_phrase"])
 		op["failed_commas"] = get_failed_punctuation_marks(",", request.form["commas"], op["user_phrase"])
+		op["shift"] = int(request.form["shift"])
+		op["del"] = int(request.form["del"])
 
 		with Mongo:
 			OPData.insert(op)
@@ -49,6 +51,8 @@ def form():
 	if request.method == "GET":
 		values = {}
 		values["error"] = 0
+		values["shift"] = 0
+		values["del"] = 0
 		values["timestamp"] = time()
 
 		with Mongo:
