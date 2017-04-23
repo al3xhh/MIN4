@@ -40,6 +40,8 @@ def form():
 		op["failed_accent_marks"] = get_failed_accent_marks(request.form["accent_marks"], op["user_phrase"])
 		op["failed_dots"] = get_failed_punctuation_marks(".", request.form["dots"], op["user_phrase"])
 		op["failed_commas"] = get_failed_punctuation_marks(",", request.form["commas"], op["user_phrase"])
+		op["failed_question_marks"] = get_failed_punctuation_marks("?", request.form["question_marks"], op["user_phrase"])
+		op["failed_exclamation_marks"] = get_failed_punctuation_marks("!", request.form["exclamation_marks"], op["user_phrase"])
 		op["shift"] = int(request.form["shift"])
 		op["del"] = int(request.form["del"])
 
