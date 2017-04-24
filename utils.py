@@ -53,6 +53,7 @@ def get_failed_accent_marks(accent_marks, usr_phrase):
     return errors
 
 def get_failed_punctuation_marks(find, punctuation_marks, usr_phrase):
+    print punctuation_marks
     words = usr_phrase.strip().split()
     punctuation_marks = punctuation_marks.replace("[", "")
     punctuation_marks = punctuation_marks.replace("]", "")
@@ -62,6 +63,7 @@ def get_failed_punctuation_marks(find, punctuation_marks, usr_phrase):
     i = 0
 
     for word in words:
+        print i
         if punctuation_marks[i] == "1" and find not in word:
             errors += 1
         i += 1
@@ -78,10 +80,10 @@ def find_accent_marks(org_phrase):
     i = 0
 
     for word in words:
-        
+
         if not is_ascii(word):
             accent_marks[i] = 1
-        
+
         i += 1
 
     return accent_marks
