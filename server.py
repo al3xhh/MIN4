@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from utils import *
 from flask import Flask, render_template
 from flask import request
@@ -44,6 +46,8 @@ def form():
 		op["failed_exclamation_marks"] = get_failed_punctuation_marks("!", request.form["exclamation_marks"], op["user_phrase"])
 		op["shift"] = int(request.form["shift"])
 		op["del"] = int(request.form["del"])
+		op["caps_lock"] = int(request.form["caps"])
+		op["time_by_press"] = float(request.form["time"]) / float(request.form["count"])
 
 		with Mongo:
 			OPData.insert(op)
@@ -55,6 +59,9 @@ def form():
 		values["error"] = 0
 		values["shift"] = 0
 		values["del"] = 0
+		values["caps"] = 0
+		values["time"] = 0
+		values["count"] = 0
 		values["timestamp"] = time()
 
 		with Mongo:
