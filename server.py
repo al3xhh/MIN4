@@ -39,7 +39,7 @@ def form():
 		op["phrase_len_words"] = len(op["original_phrase"].split())
 		op["failed_words"] = get_failed_words(op["original_phrase"], op["user_phrase"])
 		op["failed_chars"] = get_num_failed_chars(op["original_phrase"], op["user_phrase"])
-		op["failed_accent_marks"] = get_failed_accent_marks(request.form["accent_marks"], op["user_phrase"])
+		op["failed_apostrophes"] = get_failed_punctuation_marks("'", request.form["apostrophes"], op["user_phrase"])
 		op["failed_dots"] = get_failed_punctuation_marks(".", request.form["dots"], op["user_phrase"])
 		op["failed_commas"] = get_failed_punctuation_marks(",", request.form["commas"], op["user_phrase"])
 		op["failed_question_marks"] = get_failed_punctuation_marks("?", request.form["question_marks"], op["user_phrase"])

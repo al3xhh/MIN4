@@ -58,17 +58,9 @@ def find_apostrophe(org_phrase):
     i = 0
 
     for word in words:
-<<<<<<< HEAD
         
         if "'" in word:
             apostrophes[i] = 1
-        
-=======
-
-        if not is_ascii(word):
-            accent_marks[i] = 1
-
->>>>>>> 0dc2a780060c41652501ca865b3ed70d755fdf4e
         i += 1
 
     return apostrophes
