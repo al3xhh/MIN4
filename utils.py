@@ -36,22 +36,6 @@ def find_word_errors(org_word, usr_word):
 
     return max(len(org_word), len(usr_word)) - size
 
-def get_failed_accent_marks(accent_marks, usr_phrase):
-    words = usr_phrase.strip().split()
-    accent_marks = accent_marks.replace("[", "")
-    accent_marks = accent_marks.replace("]", "")
-    accent_marks = accent_marks.replace(" ", "")
-    accent_marks = accent_marks.split(",")
-    errors = 0
-    i = 0
-
-    for word in words:
-        if accent_marks[i] == "1" and is_ascii(word):
-            errors += 1
-        i += 1
-
-    return errors
-
 def get_failed_punctuation_marks(find, punctuation_marks, usr_phrase):
     words = usr_phrase.strip().split()
     punctuation_marks = punctuation_marks.replace("[", "")
@@ -68,23 +52,19 @@ def get_failed_punctuation_marks(find, punctuation_marks, usr_phrase):
 
     return errors
 
-
-def is_ascii(word):
-    return all((ord(c) < 128 or ord(c) == 161 or ord(c) == 191 or ord(c) == 241 or ord(c) == 209) for c in word)
-
-def find_accent_marks(org_phrase):
+def find_apostrophe(org_phrase):
     words = org_phrase.strip().split()
-    accent_marks = [0] * len(words)
+    apostrophes = [0] * len(words)
     i = 0
 
     for word in words:
         
-        if not is_ascii(word):
-            accent_marks[i] = 1
+        if "'" in word:
+            apostrophes[i] = 1
         
         i += 1
 
-    return accent_marks
+    return apostrophes
 
 def find_question_marks(org_phrase):
     words = org_phrase.strip().split()

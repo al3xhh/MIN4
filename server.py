@@ -60,11 +60,11 @@ def form():
 		with Mongo:
 			rnd_num = randint(0, OPPhrase.count() - 1)
 			values["phrase"] = OPPhrase.find()[rnd_num]["phrase"]
-			values["accent_marks"] = OPPhrase.find()[rnd_num]["accent_marks"]
 			values["question_marks"] = OPPhrase.find()[rnd_num]["question_marks"]
 			values["exclamation_marks"] = OPPhrase.find()[rnd_num]["exclamation_marks"]
 			values["dots"] = OPPhrase.find()[rnd_num]["dots"]
 			values["commas"] = OPPhrase.find()[rnd_num]["commas"]
+			values["apostrophes"] = OPPhrase.find()[rnd_num]["apostrophes"]
 
 		return render_template("form.html", vs=values)
 
@@ -74,11 +74,11 @@ def loadPhrases():
 		op = OPPhrase()
 		org_phrase = request.form["phrase"]
 		op["phrase"] = org_phrase
-		op["accent_marks"] = find_accent_marks(org_phrase)
 		op["question_marks"] = find_question_marks(org_phrase)
 		op["exclamation_marks"] = find_exclamation_marks(org_phrase)
 		op["dots"] = find_punctuation_marks(org_phrase, ".")
 		op["commas"] = find_punctuation_marks(org_phrase, ",")
+		op["apostrophes"] = find_apostrophe(org_phrase)
 
 		with Mongo:
 			OPPhrase.insert(op)
