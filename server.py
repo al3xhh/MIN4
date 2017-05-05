@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from utils import *
-from flask import Flask, render_template
+from flask import Flask, render_template, Response
 from flask import request
 from random import randint
 from time import time
@@ -94,3 +94,49 @@ def loadPhrases():
 
 	if request.method == "GET":
 		return render_template("phrase_form.html")
+
+@app.route("/list", methods=["GET"])
+def list():
+	with Mongo:
+		ops = OPData.find()
+		ss = ""
+		delimiter = ";"
+
+		for o in ops:
+			try:
+				ss += str(o["total_time"])
+				ss += delimiter
+				ss += str(o["phrase_len_words"])
+				ss += delimiter
+				ss += str(o["phrase_len_chars"])
+				ss += delimiter
+				ss += str(o["failed_exclamation_marks"])
+				ss += delimiter
+				ss += str(o["failed_dots"])
+				ss += delimiter
+				ss += str(o["failed_apostrophes"])
+				ss += delimiter
+				ss += str(o["del"])
+				ss += delimiter
+				ss += str(o["caps_lock"])
+				ss += delimiter
+				ss += str(o["shift"])
+				ss += delimiter
+				ss += str(o["failed_question_marks"])
+				ss += delimiter
+				ss += str(o["failed_commas"])
+				ss += delimiter
+				ss += str(o["time_by_press"])
+				ss += delimiter
+				ss += str(o["failed_chars"])
+				ss += delimiter
+				ss += str(o["avg_time_keystroke"])
+				ss += delimiter
+				ss += str(o["failed_words"])
+				ss += delimiter
+				ss += str(o["name"])
+				ss += "\n"
+			except Exception as e:
+				print e
+
+	return Response(ss, mimetype="text/csv", headers={"Content-disposition":"attachment; filename=samples.csv"})
