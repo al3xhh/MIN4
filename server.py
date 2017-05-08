@@ -6,6 +6,9 @@ from flask import request
 from random import randint
 from time import time
 from humbledb import Mongo, Document
+from sklearn.externals import joblib
+from sklearn.ensemble import RandomForestClassifier
+import pickle
 
 class OPData(Document):
 	config_database = "mineria"
@@ -52,7 +55,17 @@ def form():
 		with Mongo:
 			OPData.insert(op)
 
-		return render_template("result.html")
+		vs = {}
+		features = [op["total_time"], op["phrase_len_words"], op["phrase_len_chars"], op["failed_exclamation_marks"], op["failed_dots"], op["failed_apostrophes"],
+					op["del"], op["caps_lock"], op["shift"], op["failed_question_marks"], op["failed_commas"], op["time_by_press"], op["failed_chars"], op["avg_time_keystroke"],
+					op["failed_words"]]
+		names = ["Alejandro", "Christian"]
+
+		clf = joblib.load('../clf.pkl')
+		vs["realName"] = op["name"]
+		vs["predictName"] = names[int(clf.predict(features))]
+
+		return render_template("result.html", vs=vs)
 
 	if request.method == "GET":
 		values = {}
