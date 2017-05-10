@@ -4,7 +4,10 @@
 		<title>Resultado</title>
 	</head>
 	<body>
+		{% if vs.realName == vs.predictName %}
 		<p>You are: {{vs.realName}}<p>
-		<p>I think you are: {{vs.predictName}}<p>
+		{% else %}
+		<p>You are not: {{vs.realName}}<p>
+		{%endif%}
 	</body>
 </html>
